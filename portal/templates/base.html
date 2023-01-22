@@ -1,4 +1,5 @@
 {% load static tailwind_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,13 +19,29 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+      defer
+    ></script>
+    <script src="{%static 'js/init-alpine.js'%}"></script>
     {% tailwind_css %}
     <title>University of Central Punjab</title>
   </head>
   <body>
-    <header>
-      <aside>{% include 'aside.html' %}</aside>
-    </header>
-    {% block content %} {% endblock %}
+    <header>{% include 'aside.html' %} {% include 'mobileAside.html' %}</header>
+
+    <div class="flex flex-col flex-1">
+      {%include 'navbar.html'%}
+      <main class="overflow-y-auto pb-16 h-full">
+        <!-- Remove everything INSIDE this div to a really blank page -->
+        <div class="container grid px-6 mx-auto">
+          <h2
+            class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+          >
+            Blank
+          </h2>
+        </div>
+      {% block content %} {% endblock %}
+      </main></div>
   </body>
 </html>

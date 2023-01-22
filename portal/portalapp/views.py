@@ -7,13 +7,25 @@ def login_view(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
+        print(email, password)
         user = authenticate(request, email=email, password=password)
         if user is not None:
+            print("user is not none")
+            error_message = ""
             login(request, user)
-            return redirect('home')
+            return redirect('index')
         else:
-            error_message = "Invalid login credentials. Please try again."
-    return render(request, 'login/index.html', {'error_message': error_message})
+            # authenticate based on username and password
+            user = authenticate(request, username=email, password=password)
+            if user is not None:
+                print("user is not none")
+                error_message = ""
+                login(request, user)
+                return redirect('index')
+            else:
+                error_message = "Invalid login credentials. Please try again."
+                return render(request, 'login/index.html', {'error_message': error_message})
+    return render(request, 'login/index.html', {'error_message': ""})
 
 
 def index(request):
