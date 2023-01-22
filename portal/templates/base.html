@@ -1,0 +1,30 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="description"
+      content="Discover the University of Central Punjab, a leading private institution located in Lahore, Pakistan. Established in 2002 and recognized by the Higher Education Commission, UCP offers a variety of academic programs through its faculties of Engineering, Arts and Social Sciences, Pharmacy, Law, Media and Communication Studies, Life Sciences, and Information Technology. With a state-of-the-art campus and a well-stocked library, UCP is the perfect choice for students looking for a top-quality education."
+    />
+    <meta
+      name="keywords"
+      content="University of Central Punjab, UCP, private university, Lahore, Pakistan, Higher Education Commission, HEC, academic programs, faculties, Engineering, Arts and Social Sciences, Pharmacy, Law, Media and Communication Studies, Life Sciences, Information Technology, campus, library, education"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    {% tailwind_css %}
+    <title>University of Central Punjab</title>
+  </head>
+  <body>
+    <header>
+      <aside>{% include 'aside.html' %}</aside>
+    </header>
+    {% block content %} {% endblock %}
+  </body>
+</html>
