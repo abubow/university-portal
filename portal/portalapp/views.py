@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-
+from django import forms
+from django.contrib.auth.models import User
 def login_view(request):
     error_message = ""
     if request.method == 'POST':
@@ -30,19 +31,21 @@ def login_view(request):
 def signup_view(request):
     if request.method == 'POST':
         email = request.POST['email']
+        username = request.POST['username']
         password = request.POST['password']
         password2 = request.POST['password2']
         agreements = request.POST.get('agreements', False)
         if password == password2 and agreements:
             try:
-                user = User.objects.get(email=email)
+                user = User.objects.get(username=username)
                 return render(request, 'signup/index.html', {'error': 'Email already in use'})
             except User.DoesNotExist:
-                user = User.objects.create_user(email=email, password=password)
+                user = User.objects.create_user(username=username, email=email, password=password)
+                user.save()
                 login(request, user)
-                return redirect('home')
+                return redirect('index')
         else:
-            return render(request, 'signup/index.html', {'error': 'Passwords do not match'})
+            return render(request, 'signup/index.html', {'error': 'Not all arguments Provided.'})
     else:
         return render(request, 'signup/index.html')
 
