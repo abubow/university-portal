@@ -22,7 +22,12 @@
     {% tailwind_css %}
   </head>
   <body>
-    <div class="flex items-center p-6 min-h-screen bg-gray-50 dark:bg-gray-900">
+    <form
+      class="flex items-center p-6 min-h-screen bg-gray-50 dark:bg-gray-900"
+      method="post"
+      action="{% url 'register' %}"
+    >
+      {% csrf_token %}
       <div
         class="overflow-hidden flex-1 mx-auto max-w-4xl h-full bg-white rounded-lg shadow-xl dark:bg-gray-800"
       >
@@ -53,6 +58,7 @@
                 <input
                   class="block mt-1 w-full text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   placeholder="Jane Doe"
+                  name="email"
                 />
               </label>
               <label class="block mt-4 text-sm">
@@ -61,6 +67,8 @@
                   class="block mt-1 w-full text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   placeholder="***************"
                   type="password"
+                  name="password"
+                  required
                 />
               </label>
               <label class="block mt-4 text-sm">
@@ -71,6 +79,8 @@
                   class="block mt-1 w-full text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   placeholder="***************"
                   type="password"
+                  name="password2"
+                  required
                 />
               </label>
 
@@ -79,6 +89,8 @@
                   <input
                     type="checkbox"
                     class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                    name="agreements"
+                    required
                   />
                   <span class="ml-2">
                     I agree to the
@@ -87,13 +99,15 @@
                 </label>
               </div>
 
-              <!-- You should use a button here, as the anchor is only used for the example  -->
-              <a
+              {% if error %}
+              <p class="text-red-500">{{ error }}</p>
+              {% endif %}
+              <button
                 class="block px-4 py-2 mt-4 w-full text-sm font-medium leading-5 text-center text-white bg-purple-600 rounded-lg border border-transparent transition-colors duration-150 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                href="{% url 'login' %}"
+                type="submit"
               >
                 Create account
-              </a>
+              </button>
 
               <hr class="my-8" />
 
@@ -140,6 +154,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </body>
 </html>

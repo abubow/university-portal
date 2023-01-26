@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-from .forms import MyAuthForm
 
 def login_view(request):
     error_message = ""
@@ -27,6 +26,26 @@ def login_view(request):
                 error_message = "Invalid login credentials. Please try again."
                 return render(request, 'login/index.html', {'error_message': error_message})
     return render(request, 'login/index.html', {'error_message': ""})
+
+def signup_view(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+        agreements = request.POST.get('agreements', False)
+        if password == password2 and agreements:
+            try:
+                user = User.objects.get(email=email)
+                return render(request, 'signup/index.html', {'error': 'Email already in use'})
+            except User.DoesNotExist:
+                user = User.objects.create_user(email=email, password=password)
+                login(request, user)
+                return redirect('home')
+        else:
+            return render(request, 'signup/index.html', {'error': 'Passwords do not match'})
+    else:
+        return render(request, 'signup/index.html')
+
 
 @login_required(login_url='/login/')
 def index(request):
